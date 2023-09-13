@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import Sidebar from "@components/Sidebar";
 
 const poppins = Poppins({
   subsets: ["latin-ext"],
@@ -20,7 +21,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={poppins.className}>{children}</body>
+      <body className={`${poppins.className} flex`}>
+        <Sidebar />
+        <div className="h-screen flex-1 p-7">{children}</div>
+      </body>
     </html>
   );
 }
