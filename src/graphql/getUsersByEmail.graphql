@@ -1,0 +1,8 @@
+query getUserbyEmail($email: String = "") {
+  users(where: {email: {_eq: $email}}) {
+    email
+    password
+    last_name
+    first_name
+  }
+}
