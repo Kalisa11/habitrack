@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 const Sidebar: FC = () => {
   const [open, setOpen] = useState(true);
@@ -76,7 +77,10 @@ const Sidebar: FC = () => {
         ))}
       </div>
       <div className="absolute bottom-5 left-5">
-        <button className="flex items-center p-2 rounded-md cursor-pointer text-sm text-gray-300 hover:bg-light-white gap-x-4">
+        <button
+          className="flex items-center p-2 rounded-md cursor-pointer text-sm text-gray-300 hover:bg-light-white gap-x-4"
+          onClick={() => signOut()}
+        >
           <LogOut />
           <span className={`${!open && "hidden"}`}>Logout</span>
         </button>
