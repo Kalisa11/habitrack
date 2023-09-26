@@ -1,15 +1,16 @@
 "use client";
 
-import { truncateEmail } from "@/lib/utils";
+import { cn, truncateEmail } from "@/lib/utils";
+import { useSidebar } from "@/src/store/sidebarStore";
 import { Bell, Mails, Search, UserCircle2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 const DashNav = () => {
   const { data: session } = useSession();
-  console.log(session);
+  const open = useSidebar((state) => state.open);
   return (
     <div className="flex items-center justify-between h-16 shadow-lg px-6">
-      <div className="flex items-center rounded-lg">
+      <div className={cn("flex items-center rounded-lg", open ? 'pl-[180px]' : 'pl-20')}>
         <input
           type="text"
           placeholder="Search..."

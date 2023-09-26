@@ -6,10 +6,10 @@ import { hasuraClient } from "@/lib/hasuraClient";
 import {
   CreateSocialUserDocument,
   GetUserbyEmailDocument,
+  Users,
 } from "@/src/graphql/generated/graphql";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { User } from "@/lib/types";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -112,7 +112,7 @@ export const authOptions: NextAuthOptions = {
           // check if a user already exists in the database
           const data = (await hasuraClient(GetUserbyEmailDocument, {
             email: token.email,
-          })) as { users: User[] };
+          })) as { users: Users[] };
 
           if (data?.users?.length > 0) {
             token.userId = data.users[0].id;
@@ -128,7 +128,7 @@ export const authOptions: NextAuthOptions = {
             const newUserData = (await hasuraClient(
               CreateSocialUserDocument,
               variables
-            )) as { insert_users_one: User };
+            )) as { insert_users_one: Users };
 
             token.userId = newUserData.insert_users_one.id;
             token.lastName = newUserData.insert_users_one.last_name;
