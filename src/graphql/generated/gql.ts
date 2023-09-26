@@ -15,6 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "mutation createSocialUser($email: String = \"\", $last_name: String = \"\", $first_name: String = \"\") {\n  insert_users_one(\n    object: {email: $email, last_name: $last_name, first_name: $first_name}\n  ) {\n    email\n    last_name\n    first_name\n  }\n}": types.CreateSocialUserDocument,
     "mutation createUser($email: String = \"\", $password: String = \"\") {\n  insert_users_one(object: {email: $email, password: $password}) {\n    email\n    password\n  }\n}": types.CreateUserDocument,
+    "query GetCategory {\n  category {\n    id\n    description\n    name\n  }\n}": types.GetCategoryDocument,
+    "query GetHabitByUser($email: String = \"\") {\n  habit(where: {user: {email: {_eq: $email}}}) {\n    id\n    name\n    user_id\n    description\n    created_at\n    end_date\n    updated_at\n    start_date\n    category {\n      name\n    }\n  }\n}": types.GetHabitByUserDocument,
     "query getUserbyEmail($email: String = \"\") {\n  users(where: {email: {_eq: $email}}) {\n    email\n    password\n    last_name\n    first_name\n  }\n}": types.GetUserbyEmailDocument,
 };
 
@@ -40,6 +42,14 @@ export function graphql(source: "mutation createSocialUser($email: String = \"\"
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "mutation createUser($email: String = \"\", $password: String = \"\") {\n  insert_users_one(object: {email: $email, password: $password}) {\n    email\n    password\n  }\n}"): (typeof documents)["mutation createUser($email: String = \"\", $password: String = \"\") {\n  insert_users_one(object: {email: $email, password: $password}) {\n    email\n    password\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetCategory {\n  category {\n    id\n    description\n    name\n  }\n}"): (typeof documents)["query GetCategory {\n  category {\n    id\n    description\n    name\n  }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query GetHabitByUser($email: String = \"\") {\n  habit(where: {user: {email: {_eq: $email}}}) {\n    id\n    name\n    user_id\n    description\n    created_at\n    end_date\n    updated_at\n    start_date\n    category {\n      name\n    }\n  }\n}"): (typeof documents)["query GetHabitByUser($email: String = \"\") {\n  habit(where: {user: {email: {_eq: $email}}}) {\n    id\n    name\n    user_id\n    description\n    created_at\n    end_date\n    updated_at\n    start_date\n    category {\n      name\n    }\n  }\n}"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -70,31 +70,31 @@ export type Category = {
   __typename?: 'category';
   description?: Maybe<Scalars['String']['output']>;
   /** An array relationship */
-  habit_categories: Array<Habit_Categories>;
+  habits: Array<Habit>;
   /** An aggregate relationship */
-  habit_categories_aggregate: Habit_Categories_Aggregate;
+  habits_aggregate: Habit_Aggregate;
   id: Scalars['uuid']['output'];
   name: Scalars['String']['output'];
 };
 
 
 /** Habit categories */
-export type CategoryHabit_CategoriesArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
+export type CategoryHabitsArgs = {
+  distinct_on?: InputMaybe<Array<Habit_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
+  order_by?: InputMaybe<Array<Habit_Order_By>>;
+  where?: InputMaybe<Habit_Bool_Exp>;
 };
 
 
 /** Habit categories */
-export type CategoryHabit_Categories_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
+export type CategoryHabits_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Habit_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
+  order_by?: InputMaybe<Array<Habit_Order_By>>;
+  where?: InputMaybe<Habit_Bool_Exp>;
 };
 
 /** aggregated selection of "category" */
@@ -125,8 +125,8 @@ export type Category_Bool_Exp = {
   _not?: InputMaybe<Category_Bool_Exp>;
   _or?: InputMaybe<Array<Category_Bool_Exp>>;
   description?: InputMaybe<String_Comparison_Exp>;
-  habit_categories?: InputMaybe<Habit_Categories_Bool_Exp>;
-  habit_categories_aggregate?: InputMaybe<Habit_Categories_Aggregate_Bool_Exp>;
+  habits?: InputMaybe<Habit_Bool_Exp>;
+  habits_aggregate?: InputMaybe<Habit_Aggregate_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
 };
@@ -140,7 +140,7 @@ export enum Category_Constraint {
 /** input type for inserting data into table "category" */
 export type Category_Insert_Input = {
   description?: InputMaybe<Scalars['String']['input']>;
-  habit_categories?: InputMaybe<Habit_Categories_Arr_Rel_Insert_Input>;
+  habits?: InputMaybe<Habit_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
@@ -187,7 +187,7 @@ export type Category_On_Conflict = {
 /** Ordering options when selecting data from "category". */
 export type Category_Order_By = {
   description?: InputMaybe<Order_By>;
-  habit_categories_aggregate?: InputMaybe<Habit_Categories_Aggregate_Order_By>;
+  habits_aggregate?: InputMaybe<Habit_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
 };
@@ -257,13 +257,12 @@ export enum Cursor_Ordering {
 /** columns and relationships of "habit" */
 export type Habit = {
   __typename?: 'habit';
+  /** An object relationship */
+  category?: Maybe<Category>;
+  category_id?: Maybe<Scalars['uuid']['output']>;
   created_at: Scalars['timestamptz']['output'];
   description: Scalars['String']['output'];
   end_date: Scalars['timestamptz']['output'];
-  /** An array relationship */
-  habit_categories: Array<Habit_Categories>;
-  /** An aggregate relationship */
-  habit_categories_aggregate: Habit_Categories_Aggregate;
   /** An array relationship */
   habit_records: Array<Habit_Records>;
   /** An aggregate relationship */
@@ -279,26 +278,6 @@ export type Habit = {
   /** An object relationship */
   user: Users;
   user_id: Scalars['uuid']['output'];
-};
-
-
-/** columns and relationships of "habit" */
-export type HabitHabit_CategoriesArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
-};
-
-
-/** columns and relationships of "habit" */
-export type HabitHabit_Categories_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
 };
 
 
@@ -393,11 +372,11 @@ export type Habit_Bool_Exp = {
   _and?: InputMaybe<Array<Habit_Bool_Exp>>;
   _not?: InputMaybe<Habit_Bool_Exp>;
   _or?: InputMaybe<Array<Habit_Bool_Exp>>;
+  category?: InputMaybe<Category_Bool_Exp>;
+  category_id?: InputMaybe<Uuid_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   end_date?: InputMaybe<Timestamptz_Comparison_Exp>;
-  habit_categories?: InputMaybe<Habit_Categories_Bool_Exp>;
-  habit_categories_aggregate?: InputMaybe<Habit_Categories_Aggregate_Bool_Exp>;
   habit_records?: InputMaybe<Habit_Records_Bool_Exp>;
   habit_records_aggregate?: InputMaybe<Habit_Records_Aggregate_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -410,201 +389,6 @@ export type Habit_Bool_Exp = {
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
-/** columns and relationships of "habit_categories" */
-export type Habit_Categories = {
-  __typename?: 'habit_categories';
-  /** An object relationship */
-  category: Category;
-  category_id: Scalars['uuid']['output'];
-  /** An object relationship */
-  habit: Habit;
-  habit_id: Scalars['uuid']['output'];
-  id: Scalars['uuid']['output'];
-};
-
-/** aggregated selection of "habit_categories" */
-export type Habit_Categories_Aggregate = {
-  __typename?: 'habit_categories_aggregate';
-  aggregate?: Maybe<Habit_Categories_Aggregate_Fields>;
-  nodes: Array<Habit_Categories>;
-};
-
-export type Habit_Categories_Aggregate_Bool_Exp = {
-  count?: InputMaybe<Habit_Categories_Aggregate_Bool_Exp_Count>;
-};
-
-export type Habit_Categories_Aggregate_Bool_Exp_Count = {
-  arguments?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-  filter?: InputMaybe<Habit_Categories_Bool_Exp>;
-  predicate: Int_Comparison_Exp;
-};
-
-/** aggregate fields of "habit_categories" */
-export type Habit_Categories_Aggregate_Fields = {
-  __typename?: 'habit_categories_aggregate_fields';
-  count: Scalars['Int']['output'];
-  max?: Maybe<Habit_Categories_Max_Fields>;
-  min?: Maybe<Habit_Categories_Min_Fields>;
-};
-
-
-/** aggregate fields of "habit_categories" */
-export type Habit_Categories_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']['input']>;
-};
-
-/** order by aggregate values of table "habit_categories" */
-export type Habit_Categories_Aggregate_Order_By = {
-  count?: InputMaybe<Order_By>;
-  max?: InputMaybe<Habit_Categories_Max_Order_By>;
-  min?: InputMaybe<Habit_Categories_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "habit_categories" */
-export type Habit_Categories_Arr_Rel_Insert_Input = {
-  data: Array<Habit_Categories_Insert_Input>;
-  /** upsert condition */
-  on_conflict?: InputMaybe<Habit_Categories_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "habit_categories". All fields are combined with a logical 'AND'. */
-export type Habit_Categories_Bool_Exp = {
-  _and?: InputMaybe<Array<Habit_Categories_Bool_Exp>>;
-  _not?: InputMaybe<Habit_Categories_Bool_Exp>;
-  _or?: InputMaybe<Array<Habit_Categories_Bool_Exp>>;
-  category?: InputMaybe<Category_Bool_Exp>;
-  category_id?: InputMaybe<Uuid_Comparison_Exp>;
-  habit?: InputMaybe<Habit_Bool_Exp>;
-  habit_id?: InputMaybe<Uuid_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "habit_categories" */
-export enum Habit_Categories_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  HabitCategoriesPkey = 'habit_categories_pkey'
-}
-
-/** input type for inserting data into table "habit_categories" */
-export type Habit_Categories_Insert_Input = {
-  category?: InputMaybe<Category_Obj_Rel_Insert_Input>;
-  category_id?: InputMaybe<Scalars['uuid']['input']>;
-  habit?: InputMaybe<Habit_Obj_Rel_Insert_Input>;
-  habit_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** aggregate max on columns */
-export type Habit_Categories_Max_Fields = {
-  __typename?: 'habit_categories_max_fields';
-  category_id?: Maybe<Scalars['uuid']['output']>;
-  habit_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by max() on columns of table "habit_categories" */
-export type Habit_Categories_Max_Order_By = {
-  category_id?: InputMaybe<Order_By>;
-  habit_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Habit_Categories_Min_Fields = {
-  __typename?: 'habit_categories_min_fields';
-  category_id?: Maybe<Scalars['uuid']['output']>;
-  habit_id?: Maybe<Scalars['uuid']['output']>;
-  id?: Maybe<Scalars['uuid']['output']>;
-};
-
-/** order by min() on columns of table "habit_categories" */
-export type Habit_Categories_Min_Order_By = {
-  category_id?: InputMaybe<Order_By>;
-  habit_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-};
-
-/** response of any mutation on the table "habit_categories" */
-export type Habit_Categories_Mutation_Response = {
-  __typename?: 'habit_categories_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int']['output'];
-  /** data from the rows affected by the mutation */
-  returning: Array<Habit_Categories>;
-};
-
-/** on_conflict condition type for table "habit_categories" */
-export type Habit_Categories_On_Conflict = {
-  constraint: Habit_Categories_Constraint;
-  update_columns?: Array<Habit_Categories_Update_Column>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "habit_categories". */
-export type Habit_Categories_Order_By = {
-  category?: InputMaybe<Category_Order_By>;
-  category_id?: InputMaybe<Order_By>;
-  habit?: InputMaybe<Habit_Order_By>;
-  habit_id?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: habit_categories */
-export type Habit_Categories_Pk_Columns_Input = {
-  id: Scalars['uuid']['input'];
-};
-
-/** select columns of table "habit_categories" */
-export enum Habit_Categories_Select_Column {
-  /** column name */
-  CategoryId = 'category_id',
-  /** column name */
-  HabitId = 'habit_id',
-  /** column name */
-  Id = 'id'
-}
-
-/** input type for updating data in table "habit_categories" */
-export type Habit_Categories_Set_Input = {
-  category_id?: InputMaybe<Scalars['uuid']['input']>;
-  habit_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** Streaming cursor of the table "habit_categories" */
-export type Habit_Categories_Stream_Cursor_Input = {
-  /** Stream column input with initial value */
-  initial_value: Habit_Categories_Stream_Cursor_Value_Input;
-  /** cursor ordering */
-  ordering?: InputMaybe<Cursor_Ordering>;
-};
-
-/** Initial value of the column from where the streaming should start */
-export type Habit_Categories_Stream_Cursor_Value_Input = {
-  category_id?: InputMaybe<Scalars['uuid']['input']>;
-  habit_id?: InputMaybe<Scalars['uuid']['input']>;
-  id?: InputMaybe<Scalars['uuid']['input']>;
-};
-
-/** update columns of table "habit_categories" */
-export enum Habit_Categories_Update_Column {
-  /** column name */
-  CategoryId = 'category_id',
-  /** column name */
-  HabitId = 'habit_id',
-  /** column name */
-  Id = 'id'
-}
-
-export type Habit_Categories_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Habit_Categories_Set_Input>;
-  /** filter the rows which have to be updated */
-  where: Habit_Categories_Bool_Exp;
-};
-
 /** unique or primary key constraints on table "habit" */
 export enum Habit_Constraint {
   /** unique or primary key constraint on columns "id" */
@@ -613,10 +397,11 @@ export enum Habit_Constraint {
 
 /** input type for inserting data into table "habit" */
 export type Habit_Insert_Input = {
+  category?: InputMaybe<Category_Obj_Rel_Insert_Input>;
+  category_id?: InputMaybe<Scalars['uuid']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   end_date?: InputMaybe<Scalars['timestamptz']['input']>;
-  habit_categories?: InputMaybe<Habit_Categories_Arr_Rel_Insert_Input>;
   habit_records?: InputMaybe<Habit_Records_Arr_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -630,6 +415,7 @@ export type Habit_Insert_Input = {
 /** aggregate max on columns */
 export type Habit_Max_Fields = {
   __typename?: 'habit_max_fields';
+  category_id?: Maybe<Scalars['uuid']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   end_date?: Maybe<Scalars['timestamptz']['output']>;
@@ -642,6 +428,7 @@ export type Habit_Max_Fields = {
 
 /** order by max() on columns of table "habit" */
 export type Habit_Max_Order_By = {
+  category_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   end_date?: InputMaybe<Order_By>;
@@ -655,6 +442,7 @@ export type Habit_Max_Order_By = {
 /** aggregate min on columns */
 export type Habit_Min_Fields = {
   __typename?: 'habit_min_fields';
+  category_id?: Maybe<Scalars['uuid']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   end_date?: Maybe<Scalars['timestamptz']['output']>;
@@ -667,6 +455,7 @@ export type Habit_Min_Fields = {
 
 /** order by min() on columns of table "habit" */
 export type Habit_Min_Order_By = {
+  category_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   end_date?: InputMaybe<Order_By>;
@@ -702,10 +491,11 @@ export type Habit_On_Conflict = {
 
 /** Ordering options when selecting data from "habit". */
 export type Habit_Order_By = {
+  category?: InputMaybe<Category_Order_By>;
+  category_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   end_date?: InputMaybe<Order_By>;
-  habit_categories_aggregate?: InputMaybe<Habit_Categories_Aggregate_Order_By>;
   habit_records_aggregate?: InputMaybe<Habit_Records_Aggregate_Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
@@ -1058,6 +848,8 @@ export type Habit_Records_Variance_Order_By = {
 /** select columns of table "habit" */
 export enum Habit_Select_Column {
   /** column name */
+  CategoryId = 'category_id',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
@@ -1077,6 +869,7 @@ export enum Habit_Select_Column {
 
 /** input type for updating data in table "habit" */
 export type Habit_Set_Input = {
+  category_id?: InputMaybe<Scalars['uuid']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   end_date?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -1097,6 +890,7 @@ export type Habit_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Habit_Stream_Cursor_Value_Input = {
+  category_id?: InputMaybe<Scalars['uuid']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   end_date?: InputMaybe<Scalars['timestamptz']['input']>;
@@ -1109,6 +903,8 @@ export type Habit_Stream_Cursor_Value_Input = {
 
 /** update columns of table "habit" */
 export enum Habit_Update_Column {
+  /** column name */
+  CategoryId = 'category_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -1145,10 +941,6 @@ export type Mutation_Root = {
   delete_habit?: Maybe<Habit_Mutation_Response>;
   /** delete single row from the table: "habit" */
   delete_habit_by_pk?: Maybe<Habit>;
-  /** delete data from the table: "habit_categories" */
-  delete_habit_categories?: Maybe<Habit_Categories_Mutation_Response>;
-  /** delete single row from the table: "habit_categories" */
-  delete_habit_categories_by_pk?: Maybe<Habit_Categories>;
   /** delete data from the table: "habit_records" */
   delete_habit_records?: Maybe<Habit_Records_Mutation_Response>;
   /** delete single row from the table: "habit_records" */
@@ -1171,10 +963,6 @@ export type Mutation_Root = {
   insert_category_one?: Maybe<Category>;
   /** insert data into the table: "habit" */
   insert_habit?: Maybe<Habit_Mutation_Response>;
-  /** insert data into the table: "habit_categories" */
-  insert_habit_categories?: Maybe<Habit_Categories_Mutation_Response>;
-  /** insert a single row into the table: "habit_categories" */
-  insert_habit_categories_one?: Maybe<Habit_Categories>;
   /** insert a single row into the table: "habit" */
   insert_habit_one?: Maybe<Habit>;
   /** insert data into the table: "habit_records" */
@@ -1203,12 +991,6 @@ export type Mutation_Root = {
   update_habit?: Maybe<Habit_Mutation_Response>;
   /** update single row of the table: "habit" */
   update_habit_by_pk?: Maybe<Habit>;
-  /** update data of the table: "habit_categories" */
-  update_habit_categories?: Maybe<Habit_Categories_Mutation_Response>;
-  /** update single row of the table: "habit_categories" */
-  update_habit_categories_by_pk?: Maybe<Habit_Categories>;
-  /** update multiples rows of table: "habit_categories" */
-  update_habit_categories_many?: Maybe<Array<Maybe<Habit_Categories_Mutation_Response>>>;
   /** update multiples rows of table: "habit" */
   update_habit_many?: Maybe<Array<Maybe<Habit_Mutation_Response>>>;
   /** update data of the table: "habit_records" */
@@ -1258,18 +1040,6 @@ export type Mutation_RootDelete_HabitArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Habit_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Habit_CategoriesArgs = {
-  where: Habit_Categories_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Habit_Categories_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -1340,20 +1110,6 @@ export type Mutation_RootInsert_Category_OneArgs = {
 export type Mutation_RootInsert_HabitArgs = {
   objects: Array<Habit_Insert_Input>;
   on_conflict?: InputMaybe<Habit_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Habit_CategoriesArgs = {
-  objects: Array<Habit_Categories_Insert_Input>;
-  on_conflict?: InputMaybe<Habit_Categories_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Habit_Categories_OneArgs = {
-  object: Habit_Categories_Insert_Input;
-  on_conflict?: InputMaybe<Habit_Categories_On_Conflict>;
 };
 
 
@@ -1451,26 +1207,6 @@ export type Mutation_RootUpdate_HabitArgs = {
 export type Mutation_RootUpdate_Habit_By_PkArgs = {
   _set?: InputMaybe<Habit_Set_Input>;
   pk_columns: Habit_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Habit_CategoriesArgs = {
-  _set?: InputMaybe<Habit_Categories_Set_Input>;
-  where: Habit_Categories_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Habit_Categories_By_PkArgs = {
-  _set?: InputMaybe<Habit_Categories_Set_Input>;
-  pk_columns: Habit_Categories_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Habit_Categories_ManyArgs = {
-  updates: Array<Habit_Categories_Updates>;
 };
 
 
@@ -1594,12 +1330,6 @@ export type Query_Root = {
   /** fetch data from the table: "habit" using primary key columns */
   habit_by_pk?: Maybe<Habit>;
   /** An array relationship */
-  habit_categories: Array<Habit_Categories>;
-  /** An aggregate relationship */
-  habit_categories_aggregate: Habit_Categories_Aggregate;
-  /** fetch data from the table: "habit_categories" using primary key columns */
-  habit_categories_by_pk?: Maybe<Habit_Categories>;
-  /** An array relationship */
   habit_records: Array<Habit_Records>;
   /** An aggregate relationship */
   habit_records_aggregate: Habit_Records_Aggregate;
@@ -1668,29 +1398,6 @@ export type Query_RootHabit_AggregateArgs = {
 
 
 export type Query_RootHabit_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Query_RootHabit_CategoriesArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
-};
-
-
-export type Query_RootHabit_Categories_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
-};
-
-
-export type Query_RootHabit_Categories_By_PkArgs = {
   id: Scalars['uuid']['input'];
 };
 
@@ -2239,14 +1946,6 @@ export type Subscription_Root = {
   /** fetch data from the table: "habit" using primary key columns */
   habit_by_pk?: Maybe<Habit>;
   /** An array relationship */
-  habit_categories: Array<Habit_Categories>;
-  /** An aggregate relationship */
-  habit_categories_aggregate: Habit_Categories_Aggregate;
-  /** fetch data from the table: "habit_categories" using primary key columns */
-  habit_categories_by_pk?: Maybe<Habit_Categories>;
-  /** fetch data from the table in a streaming manner: "habit_categories" */
-  habit_categories_stream: Array<Habit_Categories>;
-  /** An array relationship */
   habit_records: Array<Habit_Records>;
   /** An aggregate relationship */
   habit_records_aggregate: Habit_Records_Aggregate;
@@ -2333,36 +2032,6 @@ export type Subscription_RootHabit_AggregateArgs = {
 
 export type Subscription_RootHabit_By_PkArgs = {
   id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootHabit_CategoriesArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
-};
-
-
-export type Subscription_RootHabit_Categories_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Habit_Categories_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Habit_Categories_Order_By>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
-};
-
-
-export type Subscription_RootHabit_Categories_By_PkArgs = {
-  id: Scalars['uuid']['input'];
-};
-
-
-export type Subscription_RootHabit_Categories_StreamArgs = {
-  batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Habit_Categories_Stream_Cursor_Input>>;
-  where?: InputMaybe<Habit_Categories_Bool_Exp>;
 };
 
 
@@ -2781,6 +2450,18 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', email: string, password?: string | null } | null };
 
+export type GetCategoryQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoryQuery = { __typename?: 'query_root', category: Array<{ __typename?: 'category', id: any, description?: string | null, name: string }> };
+
+export type GetHabitByUserQueryVariables = Exact<{
+  email?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetHabitByUserQuery = { __typename?: 'query_root', habit: Array<{ __typename?: 'habit', id: any, name: string, user_id: any, description: string, created_at: any, end_date: any, updated_at: any, start_date: any, category?: { __typename?: 'category', name: string } | null }> };
+
 export type GetUserbyEmailQueryVariables = Exact<{
   email?: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -2791,4 +2472,6 @@ export type GetUserbyEmailQuery = { __typename?: 'query_root', users: Array<{ __
 
 export const CreateSocialUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createSocialUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"last_name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first_name"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"last_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"last_name"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"first_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first_name"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"last_name"}},{"kind":"Field","name":{"kind":"Name","value":"first_name"}}]}}]}}]} as unknown as DocumentNode<CreateSocialUserMutation, CreateSocialUserMutationVariables>;
 export const CreateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"password"}}]}}]}}]} as unknown as DocumentNode<CreateUserMutation, CreateUserMutationVariables>;
+export const GetCategoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCategory"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<GetCategoryQuery, GetCategoryQueryVariables>;
+export const GetHabitByUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHabitByUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"habit"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"end_date"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"start_date"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]} as unknown as DocumentNode<GetHabitByUserQuery, GetHabitByUserQueryVariables>;
 export const GetUserbyEmailDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getUserbyEmail"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"last_name"}},{"kind":"Field","name":{"kind":"Name","value":"first_name"}}]}}]}}]} as unknown as DocumentNode<GetUserbyEmailQuery, GetUserbyEmailQueryVariables>;

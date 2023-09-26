@@ -15,9 +15,12 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { useSidebar } from "@/src/store/sidebarStore";
 
 const Sidebar: FC = () => {
-  const [open, setOpen] = useState(true);
+  const open = useSidebar((state) => state.open);
+  const setOpen = useSidebar((state) => state.setOpen);
+
   const pathname = usePathname();
   const Menus = [
     { title: "Dashboard", icon: <LayoutDashboard />, link: "/" },
@@ -31,7 +34,7 @@ const Sidebar: FC = () => {
     <div
       className={` ${
         open ? "w-72" : "w-20 "
-      } bg-dark-purple h-screen p-5 pt-8 relative duration-300`}
+      } bg-dark-purple z-10 fixed h-screen p-5 pt-8 duration-300`}
     >
       <ChevronLeftCircle
         className={`absolute text-white cursor-pointer right-1 top-9 w-7
@@ -46,11 +49,11 @@ const Sidebar: FC = () => {
           }`}
         />
         {/* <img
-            src="/assets/logo.svg"
-            className={`cursor-pointer duration-500 left-0 ${
-              open && "rotate-[360deg]"
-            }`}
-          />  */}
+          src="/assets/logo.png"
+          className={`cursor-pointer text-white duration-500 left-0 ${
+            open && "rotate-[360deg]"
+          }`}
+        /> */}
         <h1
           className={`text-white origin-left font-medium text-xl duration-200 ${
             !open && "scale-0"

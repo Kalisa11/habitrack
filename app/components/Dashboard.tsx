@@ -1,5 +1,7 @@
+"use client";
+import { cn } from "@/lib/utils";
+import { useSidebar } from "@/src/store/sidebarStore";
 import { CalendarCheck, Flame, ListOrdered, Percent } from "lucide-react";
-import React from "react";
 
 const Dashboard = () => {
   const stats = [
@@ -28,8 +30,10 @@ const Dashboard = () => {
       icon: <CalendarCheck size={30} className="text-purple-500" />,
     },
   ];
+  const open = useSidebar((state) => state.open);
+
   return (
-    <div className="p-6 bg-slate-50">
+    <div className={cn("p-6 bg-slate-50", open ? "pl-52" : "pl-28")}>
       <div className="flex items-center justify-between">
         <h1 className="text-gray-500 text-2xl leading-8 font-normal">
           Dashboard

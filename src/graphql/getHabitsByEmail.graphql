@@ -1,0 +1,15 @@
+query GetHabitByUser($email: String = "") {
+  habit(where: { user: { email: { _eq: $email } } }) {
+    id
+    name
+    user_id
+    description
+    created_at
+    end_date
+    updated_at
+    start_date
+    category {
+      name
+    }
+  }
+}
