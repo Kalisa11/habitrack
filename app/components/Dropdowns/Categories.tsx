@@ -7,18 +7,27 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectGroup,
-  SelectLabel,
   SelectItem,
 } from "@components/ui/select";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@components/ui/form";
+import { Skeleton } from "@components/ui/skeleton";
 
-const Categories = () => {
+const Categories = ({ control }: { control: any }) => {
   const [categories, setCategories] = useState<Category[]>();
+  const [loading, setLoading] = useState(false);
   const getCategories = async () => {
     try {
+      setLoading(true);
       const res = await fetch(`/api/categories`);
       const categories = await res.json();
       setCategories(categories);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -28,21 +37,42 @@ const Categories = () => {
     getCategories();
   }, []);
   return (
-    <Select>
-      <SelectTrigger className="w-2/3">
-        <SelectValue placeholder="Select a category" />
-      </SelectTrigger>
-      <SelectContent className="h-32">
-        <SelectGroup>
-          <SelectLabel>Habit Categories</SelectLabel>
-          {categories?.map((category) => (
-            <SelectItem key={category.id} value={category.id}>
-              {category.name}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <FormField
+      control={control}
+      name="category_id"
+      render={({ field }) => (
+        <FormItem className="col-span-2">
+          <FormLabel>Category</FormLabel>
+          <Select onValueChange={field.onChange}>
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a category" />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent className="h-32">
+              {loading ? (
+                <div>
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      className="bg-gray-200 w-48 h-4 mb-2 pt-1 mx-auto"
+                    />
+                  ))}
+                </div>
+              ) : (
+                categories?.map((category) => (
+                  <SelectItem key={category.id} value={category.id}>
+                    {category.name}
+                  </SelectItem>
+                ))
+              )}
+            </SelectContent>
+          </Select>
+
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   );
 };
 

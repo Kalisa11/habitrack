@@ -1,5 +1,6 @@
 query getUserbyEmail($email: String = "") {
-  users(where: {email: {_eq: $email}}) {
+  users(where: { email: { _eq: $email } }) {
+    id
     email
     password
     last_name

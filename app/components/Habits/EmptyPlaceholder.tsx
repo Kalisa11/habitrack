@@ -3,7 +3,7 @@ import { BookOpenCheck, Dumbbell, GlassWater, Plus } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { useSidebar } from "@/src/store/sidebarStore";
 import { cn } from "@/lib/utils";
-import { NewHabit } from "../Modals/NewHabit";
+import { NewHabit } from "../Forms/NewHabit";
 
 const EmptyPlaceholder = () => {
   const cards = [
