@@ -1,11 +1,15 @@
+"use client";
+
 import { Button } from "@components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
+  DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@components/ui/dialog";
-import { Input } from "@components/ui/input";
 import { Calendar } from "@components/ui/calendar";
 import { CalendarIcon, Plus } from "lucide-react";
 import Categories from "../Dropdowns/Categories";
@@ -31,7 +35,7 @@ import {
 import { useSession } from "next-auth/react";
 import { hasuraClient } from "@/lib/hasuraClient";
 import { CreateHabitDocument } from "@/src/graphql/generated/graphql";
-import toast from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import InputField from "./InputField";
 
 export function NewHabit() {
@@ -44,25 +48,18 @@ export function NewHabit() {
       description: z.string(),
       start_date: z.date(),
       end_date: z.date(),
-      category_id: z.string(),
+      category_id: z.string().nonempty({
+        message: "Please select a category",
+      }),
       user_id: z.string(),
     })
     .required();
 
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       user_id: session.data?.user?.id,
     },
-  });
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
   });
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
@@ -73,11 +70,10 @@ export function NewHabit() {
         success: "Habit created!",
         error: "Error creating habit",
       });
-      reset();
+      form.reset();
     } catch (error: any) {
       toast.error(error.message);
     }
-    reset();
   }
 
   return (
@@ -89,23 +85,29 @@ export function NewHabit() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Edit profile</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you&apos;re done.
+          </DialogDescription>
+        </DialogHeader>
         <Form {...form}>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="grid grid-cols-4 gap-4 py-4">
               <InputField
-                control={control}
+                control={form.control}
                 name="name"
                 label="Name"
                 inputType="text"
               />
               <InputField
-                control={control}
+                control={form.control}
                 name="description"
                 label="Description"
                 inputType="text"
               />
               <FormField
-                control={control}
+                control={form.control}
                 name="start_date"
                 render={({ field }) => (
                   <FormItem className="flex flex-col col-span-2">
@@ -149,7 +151,7 @@ export function NewHabit() {
                 )}
               />
               <FormField
-                control={control}
+                control={form.control}
                 name="end_date"
                 render={({ field }) => (
                   <FormItem className="flex flex-col col-span-2">
@@ -192,7 +194,7 @@ export function NewHabit() {
                   </FormItem>
                 )}
               />
-              <Categories control={control} />
+              <Categories control={form.control} />
             </div>
             <DialogFooter>
               <DialogTrigger asChild={false}>
@@ -200,9 +202,7 @@ export function NewHabit() {
                   Cancel
                 </Button>
               </DialogTrigger>
-              <DialogTrigger asChild={false}>
-                <Button type="submit">Submit</Button>
-              </DialogTrigger>
+              <Button type="submit">Submit</Button>
             </DialogFooter>
           </form>
         </Form>

@@ -22,7 +22,7 @@ const InputField = ({ control, name, label, inputType }: InputFieldProps) => {
       name={name}
       render={({ field }) => (
         <FormItem className="col-span-2">
-          <FormLabel className="text-base">{label}</FormLabel>
+          <FormLabel>{label}</FormLabel>
           <FormControl>
             <Input type={inputType} {...field} />
           </FormControl>
