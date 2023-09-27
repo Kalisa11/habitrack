@@ -32,7 +32,7 @@ export function DatePicker() {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
-          className="bg-white text-black  "
+          className="bg-white text-black"
           mode="single"
           selected={date}
           onSelect={setDate}

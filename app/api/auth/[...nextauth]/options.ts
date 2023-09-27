@@ -10,6 +10,7 @@ import {
 } from "@/src/graphql/generated/graphql";
 import bcrypt from "bcrypt";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { getUser } from "@/src/helpers/auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -85,13 +86,6 @@ export const authOptions: NextAuthOptions = {
     signIn: "login",
   },
   callbacks: {
-    async session({ session }) {
-      const secret = process.env.NEXTAUTH_SECRET;
-      if (secret === undefined) {
-        throw new Error("Unable to load Environment variables");
-      }
-      return session;
-    },
     async jwt({ token, user, account, profile }) {
       // check if we have user from a provider
       if (account && profile) {
@@ -142,9 +136,24 @@ export const authOptions: NextAuthOptions = {
       }
       return Promise.resolve(token);
     },
-    // async signIn({ user, account, profile, email, credentials }) {
-    //   return true;
-    // },
+    async session({ session, token }) {
+      const secret = process.env.NEXTAUTH_SECRET;
+      if (secret === undefined) {
+        throw new Error("Unable to load Environment variables");
+      }
+      if (token?.userId === undefined) {
+        const user = await getUser(token?.email as string);
+        session = {
+          ...session,
+          user: {
+            id: user?.userId,
+            ...session.user,
+          },
+        };
+        token = { ...token, ...user };
+      }
+      return session;
+    },
   },
   debug: process.env.NODE_ENV === "development",
   session: {

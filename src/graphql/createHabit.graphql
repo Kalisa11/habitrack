@@ -1,0 +1,5 @@
+mutation createHabit($category_id: uuid = "", $description: String = "", $end_date: timestamptz = "", $name: String = "", $user_id: uuid = "", $start_date: timestamp = "", $email: String = "") {
+  insert_habit(objects: {category_id: $category_id, description: $description, end_date: $end_date, name: $name, user_id: $user_id, start_date: $start_date}) {
+    affected_rows
+  }
+}
