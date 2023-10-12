@@ -1,4 +1,5 @@
 import "./globals.css";
+import 'rsuite/dist/rsuite.min.css';
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Poppins } from "next/font/google";

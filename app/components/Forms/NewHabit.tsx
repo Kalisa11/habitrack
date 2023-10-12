@@ -58,22 +58,28 @@ export function NewHabit() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      name: "",
+      description: "",
+      start_date: new Date(),
+      end_date: new Date(),
+      category_id: "",
       user_id: session.data?.user?.id,
     },
   });
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     // ✅ This will be type-safe and validated.
-    try {
-      toast.promise(hasuraClient(CreateHabitDocument, values), {
-        loading: "Creating habit...",
-        success: "Habit created!",
-        error: "Error creating habit",
-      });
-      form.reset();
-    } catch (error: any) {
-      toast.error(error.message);
-    }
+    // try {
+    //   toast.promise(hasuraClient(CreateHabitDocument, values), {
+    //     loading: "Creating habit...",
+    //     success: "Habit created!",
+    //     error: "Error creating habit",
+    //   });
+    //   form.reset();
+    // } catch (error: any) {
+    //   toast.error(error.message);
+    // }
+    console.log(values);
   }
 
   return (
@@ -86,9 +92,9 @@ export function NewHabit() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Create Habit</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            Add new habits here. Click submit when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
