@@ -17,6 +17,8 @@ import {
   FormMessage,
 } from "@components/ui/form";
 import { Skeleton } from "@components/ui/skeleton";
+import { ScrollArea } from "@components/ui/scroll-area";
+import { Separator } from "@components/ui/separator";
 
 const Categories = ({ control }: { control: any }) => {
   const [categories, setCategories] = useState<Category[]>();
@@ -68,7 +70,6 @@ const Categories = ({ control }: { control: any }) => {
               )}
             </SelectContent>
           </Select>
-
           <FormMessage />
         </FormItem>
       )}
