@@ -2,7 +2,7 @@
 import React from "react";
 import { useSidebar } from "@/src/store/sidebarStore";
 import { cn } from "@/lib/utils";
-import { NewHabit } from "./Forms/NewHabit";
+import NewHabit from "./Forms/NewHabit";
 
 const Navbar = ({ header }: { header: string }) => {
   const open = useSidebar((state) => state.open);

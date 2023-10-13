@@ -37,8 +37,9 @@ import { hasuraClient } from "@/lib/hasuraClient";
 import { CreateHabitDocument } from "@/src/graphql/generated/graphql";
 import { toast } from "react-hot-toast";
 import InputField from "./InputField";
+import { useEffect } from "react";
 
-export function NewHabit() {
+export default function NewHabit() {
   const session = useSession();
   const FormSchema = z
     .object({
@@ -58,28 +59,28 @@ export function NewHabit() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      start_date: new Date(),
-      end_date: new Date(),
-      category_id: "",
-      user_id: session.data?.user?.id,
+      user_id: session?.data?.user?.id ? (session?.data.user.id as string) : "",
     },
   });
+  useEffect(() => {
+    if (session.data?.user?.id) {
+      form.setValue("user_id", session.data.user.id);
+    }
+  }, [form, session]);
 
   async function onSubmit(values: z.infer<typeof FormSchema>) {
     // ✅ This will be type-safe and validated.
-    // try {
-    //   toast.promise(hasuraClient(CreateHabitDocument, values), {
-    //     loading: "Creating habit...",
-    //     success: "Habit created!",
-    //     error: "Error creating habit",
-    //   });
-    //   form.reset();
-    // } catch (error: any) {
-    //   toast.error(error.message);
-    // }
     console.log(values);
+    try {
+      toast.promise(hasuraClient(CreateHabitDocument, values), {
+        loading: "Creating habit...",
+        success: "Habit created!",
+        error: "Error creating habit",
+      });
+      form.reset();
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   }
 
   return (

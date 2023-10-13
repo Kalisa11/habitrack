@@ -141,18 +141,16 @@ export const authOptions: NextAuthOptions = {
       if (secret === undefined) {
         throw new Error("Unable to load Environment variables");
       }
-      if (token?.userId === undefined) {
-        const user = await getUser(token?.email as string);
-        session = {
-          ...session,
-          user: {
-            id: user?.userId,
-            ...session.user,
-          },
-        };
-        token = { ...token, ...user };
-      }
-      return session;
+      const user = await getUser(token?.email as string);
+      const newSession = {
+        ...session,
+        user: {
+          id: user?.userId,
+          ...session.user,
+        },
+      };
+      token = { ...token, ...user };
+      return newSession;
     },
   },
   debug: process.env.NODE_ENV === "development",

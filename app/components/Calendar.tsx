@@ -57,7 +57,7 @@ const HabitCalendar = ({ habits }: { habits?: Habit[] }) => {
                 </Popover>
               }
             >
-              <a>{moreCount} more</a>
+              <a className="text-blue-500">{moreCount} more</a>
             </Whisper>
           </li>
         ) : null;
