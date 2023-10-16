@@ -18,6 +18,10 @@ const config: Config = {
       colors: {
         "dark-purple": "#081A51",
         "light-white": "rgba(255,255,255,0.17)",
+        "rich-black": "#0f1020ff",
+        "custom-teal": "#1f7a8cff",
+        "custom-amaranth": "#e01a4fff",
+        "burnt-sienna": "#d5896fff",
       },
       keyframes: {
         "accordion-down": {

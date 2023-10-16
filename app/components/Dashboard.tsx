@@ -2,6 +2,8 @@
 import { cn } from "@/lib/utils";
 import { useSidebar } from "@/src/store/sidebarStore";
 import { CalendarCheck, Flame, ListOrdered, Percent } from "lucide-react";
+import PieComponent from "@components/PieChart";
+import LineGraph from "./LineGraph";
 
 const Dashboard = () => {
   const stats = [
@@ -62,6 +64,10 @@ const Dashboard = () => {
             {stat.icon}
           </div>
         ))}
+      </div>
+      <div className="flex mt-2 w-full gap-2">
+        <LineGraph />
+        <PieComponent />
       </div>
     </div>
   );
