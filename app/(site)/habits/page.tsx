@@ -1,12 +1,11 @@
 import EmptyPlaceholder from "@components/Habits/EmptyPlaceholder";
-import Navbar from "../components/Navbar";
+import Navbar from "@components/Navbar";
 import { hasuraClient } from "@/lib/hasuraClient";
 import { GetHabitByUserDocument, Habit } from "@/src/graphql/generated/graphql";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/options";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import HabitsList from "@components/Habits/HabitsList";
 import GuestView from "@components/GuestView";
-import { Skeleton } from "../components/ui/skeleton";
 
 const HabitsPage = async () => {
   const session = await getServerSession(authOptions);
@@ -32,3 +31,5 @@ const HabitsPage = async () => {
 };
 
 export default HabitsPage;
+
+export const revalidate = 60; // revalidate at most every minute

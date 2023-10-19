@@ -51,7 +51,7 @@ const Categories = ({ control }: { control: any }) => {
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
             </FormControl>
-            <SelectContent className="h-32" style={{ zIndex: 9999 }}>
+            <SelectContent className="h-32">
               {loading ? (
                 <div>
                   {Array.from({ length: 5 }).map((_, index) => (

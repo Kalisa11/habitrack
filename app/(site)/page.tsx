@@ -1,7 +1,7 @@
 "use client";
 
 import DashNav from "@components/DashNav";
-import Dashboard from "./components/Dashboard";
+import Dashboard from "@components/Dashboard";
 import { useSidebar } from "@/src/store/sidebarStore";
 import { cn } from "@/lib/utils";
 

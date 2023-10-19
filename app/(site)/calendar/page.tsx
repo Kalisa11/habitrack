@@ -3,7 +3,7 @@ import Navbar from "@/app/components/Navbar";
 import { hasuraClient } from "@/lib/hasuraClient";
 import { GetHabitByUserDocument, Habit } from "@/src/graphql/generated/graphql";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/options";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import GuestView from "@components/GuestView";
 import CalendarView from "@components/Habits/CalendarView";
 
